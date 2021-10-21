@@ -237,7 +237,7 @@ sup {
 
 a {
   color: #bd5d38;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
 }
 a:hover {
   color: #974a2d;
@@ -7752,6 +7752,31 @@ textarea.form-control-lg {
 .text-white {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+}
+
+.text-brown {
+  --bs-text-opacity: 1;
+  color: brown !important;
+}
+
+.text-red {
+  --bs-text-opacity: 1;
+  color: red !important;
+}
+
+.text-orange {
+  --bs-text-opacity: 1;
+  color: orange !important;
+}
+
+.text-yellow {
+  --bs-text-opacity: 1;
+  color: yellow !important;
+}
+
+.text-sfblue {
+  --bs-text-opacity: 1;
+  color: #1798C1 !important;
 }
 
 .text-body {
