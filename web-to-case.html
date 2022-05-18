@@ -9,7 +9,7 @@
    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
    <!-- CSS Tables idea cited from: https://stackoverflow.com/questions/4309950/how-to-align-input-forms-in-html -->
    <style>
-      form  { display: table; width: 400px;}
+      form  { display: table; width: 400px; }
       p     { display: table-row;}
       label { display: table-cell;}
       input { display: table-cell;}
@@ -19,8 +19,8 @@
 <!--  NOTE: Please add the following <FORM> element to your page.             -->
 <!--  ----------------------------------------------------------------------  -->
 <body>
+<center>
 <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
-<p>
 <input type=hidden name="orgid" value="00D5f000005W7Fq">
 <input type=hidden name="retURL" value="https://www.google.com">
 
@@ -32,14 +32,14 @@
 <!--  value="difranco.luigi@gmail.com">                                       -->
 <!--  ----------------------------------------------------------------------  -->
 
-<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
+<p><label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /></p>
 
-<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
+<p><label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /></p>
 
-<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
+<p><label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /></p>
 
-<label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /><br>
-</p>
+<p><label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /></p>
+
 <p><label for="description">Description</label><textarea name="description"></textarea></p>
 
 <p><input type="hidden"  id="external" name="external" value="1" /></p>
@@ -47,6 +47,6 @@
 <p><input type="submit" name="submit"></p>
 
 </form>
-
+   </center>
   </body>
 </html>
