@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Web App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://storage.googleapis.com/mangelo-img/Dq0uAh-kQbkF1s-WNvlds.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: #331138;
+        }
+
+        .navbar, .btn {
+            background-color: #48CAE4;
+            border-color: #331138;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #331138;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #331138;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #331138;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Web App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5" id="home">
+        <h1>Home</h1>
+        <p>Welcome to our website!</p>
+    </div>
+
+    <div class="container mt-5" id="about">
+        <h1>About Us</h1>
+        <p>We are a dedicated team providing the best services.</p>
+    </div>
+
+    <div class="container mt-5" id="contact">
+        <h1>Contact Us</h1>
+        <form action="mailto:test@test.com" method="post" enctype="text/plain">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="question" class="form-label">Your Question</label>
+                <textarea class="form-control" id="question" rows="3" name="question"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
