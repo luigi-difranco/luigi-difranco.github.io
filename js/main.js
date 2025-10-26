@@ -74,7 +74,29 @@ contactBtn.addEventListener('click', () => {
     }
 });
 
-// Helper function removed - reCAPTCHA temporarily disabled
+// Helper function to wait for reCAPTCHA to load
+function waitForRecaptcha() {
+    return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+            clearInterval(checkInterval);
+            reject(new Error('reCAPTCHA failed to load. Please check your internet connection or disable ad blockers.'));
+        }, 5000); // 5 second timeout
+
+        if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            clearTimeout(timeout);
+            grecaptcha.ready(() => resolve());
+        } else {
+            // Check every 100ms if grecaptcha is loaded
+            const checkInterval = setInterval(() => {
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+                    clearTimeout(timeout);
+                    clearInterval(checkInterval);
+                    grecaptcha.ready(() => resolve());
+                }
+            }, 100);
+        }
+    });
+}
 
 // Form submission with proper error handling
 contactForm.addEventListener('submit', async (e) => {
@@ -91,8 +113,13 @@ contactForm.addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
 
     try {
-        // Skip reCAPTCHA verification temporarily
-        console.log('Preparing form data...');
+        // Wait for reCAPTCHA to be ready
+        await waitForRecaptcha();
+
+        // Get reCAPTCHA token
+        const token = await grecaptcha.execute('YOUR_SITE_KEY_HERE', { action: 'submit' });
+
+        console.log('reCAPTCHA token obtained');
         submitBtn.textContent = 'Sending...';
 
         const formData = {
@@ -101,7 +128,7 @@ contactForm.addEventListener('submit', async (e) => {
             lastName: lastName,
             email: email,
             message: message,
-            recaptchaToken: 'no-token' // Temporary - no reCAPTCHA
+            recaptchaToken: token
         };
 
         console.log('Sending data to Google Apps Script...');
