@@ -74,29 +74,7 @@ contactBtn.addEventListener('click', () => {
     }
 });
 
-// Helper function to wait for reCAPTCHA to load
-function waitForRecaptcha() {
-    return new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => {
-            clearInterval(checkInterval);
-            reject(new Error('reCAPTCHA failed to load. Please check your internet connection or disable ad blockers.'));
-        }, 5000); // 5 second timeout
-
-        if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
-            clearTimeout(timeout);
-            grecaptcha.ready(() => resolve());
-        } else {
-            // Check every 100ms if grecaptcha is loaded
-            const checkInterval = setInterval(() => {
-                if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
-                    clearTimeout(timeout);
-                    clearInterval(checkInterval);
-                    grecaptcha.ready(() => resolve());
-                }
-            }, 100);
-        }
-    });
-}
+// Helper function removed - reCAPTCHA temporarily disabled
 
 // Form submission with proper error handling
 contactForm.addEventListener('submit', async (e) => {
@@ -113,13 +91,8 @@ contactForm.addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
 
     try {
-        // Wait for reCAPTCHA to be ready
-        await waitForRecaptcha();
-        
-        // Get reCAPTCHA token
-        const token = await grecaptcha.execute('6Lf6KPgrAAAAAN20TqyRtK0mFDo81ZnlP5P9MPu8', { action: 'submit' });
-        
-        console.log('reCAPTCHA token obtained');
+        // Skip reCAPTCHA verification temporarily
+        console.log('Preparing form data...');
         submitBtn.textContent = 'Sending...';
 
         const formData = {
@@ -128,7 +101,7 @@ contactForm.addEventListener('submit', async (e) => {
             lastName: lastName,
             email: email,
             message: message,
-            recaptchaToken: token
+            recaptchaToken: 'no-token' // Temporary - no reCAPTCHA
         };
 
         console.log('Sending data to Google Apps Script...');
@@ -136,7 +109,7 @@ contactForm.addEventListener('submit', async (e) => {
         // Create a form and submit it (bypasses CORS/ORB issues)
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = 'https://script.google.com/macros/s/AKfycby6yA7MRcNe8-oxUZg9L5q6gMZ_9l53v2WZKwqjy4HHywvfrQdqHyDvto7iDth-f6iN6w/exec';
+        form.action = 'https://script.google.com/macros/s/AKfycbwR4Dnw4rloj1KoAhGIwzXCp0y6p88JU_CG2ZX5iJvpoE37z9yCth5JeSUPLJbsndmlRg/exec';
         form.target = 'hidden_iframe';
         form.style.display = 'none';
 
