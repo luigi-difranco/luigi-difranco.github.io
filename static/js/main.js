@@ -1,0 +1,143 @@
+ const aboutBtn = document.getElementById('aboutBtn');
+        const flipToFront = document.getElementById('flipToFront');
+        const contactBtn = document.getElementById('contactBtn');
+        const cardInner = document.getElementById('cardInner');
+        const cardBack = document.querySelector('.card-back');
+        const contactDrawer = document.getElementById('contactDrawer');
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        // Animated text cycling
+        const roles = ['An Educator', 'A Student', 'A Renaissance Man'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const animatedRole = document.getElementById('animatedRole');
+        const typingSpeed = 100;
+        const deletingSpeed = 50;
+        const pauseTime = 2000;
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+
+            if (isDeleting) {
+                animatedRole.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                animatedRole.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? deletingSpeed : typingSpeed;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                speed = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+
+        // Start the typing effect
+        setTimeout(typeEffect, 1000);
+
+        // Card flip functionality
+        aboutBtn.addEventListener('click', () => {
+            cardInner.classList.add('flipped');
+            contactDrawer.classList.remove('active');
+            cardBack.scrollTop = 0;
+        });
+
+        flipToFront.addEventListener('click', () => {
+            cardInner.classList.remove('flipped');
+        });
+
+        // Contact button functionality
+        contactBtn.addEventListener('click', () => {
+            const isOpening = !contactDrawer.classList.contains('active');
+
+            if (isOpening) {
+                // Show content before opening
+                contactForm.style.display = 'block';
+                contactDrawer.classList.add('active');
+            } else {
+                // Hide content immediately when closing
+                contactForm.style.display = 'none';
+                successMessage.classList.remove('show');
+                contactDrawer.classList.remove('active');
+
+                // Reset form after animation completes
+                setTimeout(() => {
+                    contactForm.reset();
+                    contactForm.style.display = 'block';
+                }, 400); // Match the transition duration
+            }
+        });
+
+        // Form submission
+    contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const submitBtn = contactForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Verifying...';
+    submitBtn.disabled = true;
+
+    try {
+        // Get reCAPTCHA token
+        const token = await grecaptcha.execute('6LfCEvgrAAAAACJsiH5cRklx-lm7T2XCPN7Lmckw', { action: 'submit' });
+
+        submitBtn.textContent = 'Sending...';
+
+        // Send data to Google Apps Script with token
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzI1yV_IR8AEPSe3IF2jVgjYSbHc7maQWt8067YWPEOqqKbZBasvDwC1T_IoEZc9hI6fA/exec', {
+            //const response = await fetch('YOUR_WEB_APP_URL_HERE', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                timestamp: new Date().toISOString(),
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                message: message,
+                recaptchaToken: token
+            })
+        });
+
+        // Show success message
+        contactForm.style.display = 'none';
+        successMessage.textContent = `Thank you, ${firstName}! You will be contacted shortly!`;
+        successMessage.classList.add('show');
+
+        // Close drawer after 3 seconds
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+            contactForm.style.display = 'none';
+            contactDrawer.classList.remove('active');
+
+            setTimeout(() => {
+                contactForm.reset();
+                contactForm.style.display = 'block';
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 400);
+        }, 3000);
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error submitting the form. Please try again.');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+});

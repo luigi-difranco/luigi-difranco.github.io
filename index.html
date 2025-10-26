@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+Created while Vibe Coding with Claude.ai
+Chat session here: https://claude.ai/share/f781520f-26ae-4c05-9f23-d5d34d2539af
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Business Card</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <!-- Add reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfCEvgrAAAAACJsiH5cRklx-lm7T2XCPN7Lmckw"></script>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card-flipper">
+            <div class="card-inner" id="cardInner">
+                <!-- Front of Card -->
+                <div class="business-card card-front">
+                    <div class="card-left">
+                        <h1><span class="brown-text">Hello, I'm</span> Luigi DiFranco</h1>
+                        <div class="animated-text">
+                            <strong>--> <span id="animatedRole">An Educator</span></strong>
+                        </div>
+                        <div class="button-group">
+                            <button id="aboutBtn">About</button>
+                            <button id="resumeBtn" onclick="window.open('https://luigi-difranco.github.io/resume.html', '_blank')">Resume</button>
+                            <button id="contactBtn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="card-right">
+                        <div><img src="static/img/profile/profile.png"  class="placeholder-image" alt="Photo of Luigi DiFranco"></div>
+                        <div class="social-icons">
+                            <button class="social-btn" onclick="window.open('https://www.linkedin.com/in/luigi-difranco', '_blank')" aria-label="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </button>
+                            <button class="social-btn" onclick="window.open('https://github.com/luigi-difranco', '_blank')" aria-label="GitHub">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back of Card -->
+                <div class="business-card card-back">
+                    <h2>About Me</h2>
+                    <div class="about-content">
+                    <p>A dedicated computer science educator and current graduate student,
+                        who is committed to preparing middle and high school students for
+                        the technological landscape of tomorrow. Work centers on developing
+                        innovative curricula that make complex topics, from programming
+                        to artificial intelligence, both accessible and engaging. The
+                        graduate studies provide a further exploration of the intersection
+                        between pedagogy and practice, to ensure teaching methods remain
+                        relevant and impactful.</p>
+                        <img src="static/img/profile/portrait.png" alt="About Me Portrait" class="about-image">
+                    </div>
+                    <button id="flipToFront">Flip to Front</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Drawer -->
+        <div class="contact-drawer" id="contactDrawer">
+            <div class="contact-form">
+                <h2>Get in Touch</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    Thank you! You will be contacted shortly!
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html>
