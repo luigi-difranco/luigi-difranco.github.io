@@ -74,6 +74,23 @@ contactBtn.addEventListener('click', () => {
     }
 });
 
+// Helper function to wait for reCAPTCHA to load
+function waitForRecaptcha() {
+    return new Promise((resolve) => {
+        if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            grecaptcha.ready(() => resolve());
+        } else {
+            // Check every 100ms if grecaptcha is loaded
+            const checkInterval = setInterval(() => {
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+                    clearInterval(checkInterval);
+                    grecaptcha.ready(() => resolve());
+                }
+            }, 100);
+        }
+    });
+}
+
 // Form submission with proper error handling
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -89,6 +106,9 @@ contactForm.addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
 
     try {
+        // Wait for reCAPTCHA to be ready
+        await waitForRecaptcha();
+        
         // Get reCAPTCHA token
         const token = await grecaptcha.execute('6Lf6KPgrAAAAAN20TqyRtK0mFDo81ZnlP5P9MPu8', { action: 'submit' });
         
