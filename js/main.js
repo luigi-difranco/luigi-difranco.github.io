@@ -109,7 +109,7 @@ contactForm.addEventListener('submit', async (e) => {
         // Create a form and submit it (bypasses CORS/ORB issues)
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = 'https://script.google.com/macros/s/AKfycbwR4Dnw4rloj1KoAhGIwzXCp0y6p88JU_CG2ZX5iJvpoE37z9yCth5JeSUPLJbsndmlRg/exec';
+        form.action = 'https://script.google.com/macros/s/AKfycby6yA7MRcNe8-oxUZg9L5q6gMZ_9l53v2WZKwqjy4HHywvfrQdqHyDvto7iDth-f6iN6w/exec';
         form.target = 'hidden_iframe';
         form.style.display = 'none';
 
