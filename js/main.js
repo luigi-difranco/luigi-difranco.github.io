@@ -127,7 +127,7 @@ contactForm.addEventListener('submit', async (e) => {
         console.log('Sending data to Google Apps Script...');
 
         // Send to Google Apps Script
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwR4Dnw4rloj1KoAhGIwzXCp0y6p88JU_CG2ZX5iJvpoE37z9yCth5JeSUPLJbsndmlRg/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzj7hF_dVtRXJEeychdWv9xS_nv4fxgHuGu7u0HremnL_RuLHMJvMipzOZbgaObM25K-g/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',
