@@ -76,13 +76,20 @@ contactBtn.addEventListener('click', () => {
 
 // Helper function to wait for reCAPTCHA to load
 function waitForRecaptcha() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+            clearInterval(checkInterval);
+            reject(new Error('reCAPTCHA failed to load. Please check your internet connection or disable ad blockers.'));
+        }, 5000); // 5 second timeout
+
         if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+            clearTimeout(timeout);
             grecaptcha.ready(() => resolve());
         } else {
             // Check every 100ms if grecaptcha is loaded
             const checkInterval = setInterval(() => {
                 if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+                    clearTimeout(timeout);
                     clearInterval(checkInterval);
                     grecaptcha.ready(() => resolve());
                 }
@@ -126,40 +133,57 @@ contactForm.addEventListener('submit', async (e) => {
 
         console.log('Sending data to Google Apps Script...');
 
-        // Send to Google Apps Script
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzj7hF_dVtRXJEeychdWv9xS_nv4fxgHuGu7u0HremnL_RuLHMJvMipzOZbgaObM25K-g/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain',
-            },
-            body: JSON.stringify(formData)
+        // Create a form and submit it (bypasses CORS/ORB issues)
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://script.google.com/macros/s/AKfycby6yA7MRcNe8-oxUZg9L5q6gMZ_9l53v2WZKwqjy4HHywvfrQdqHyDvto7iDth-f6iN6w/exec';
+        form.target = 'hidden_iframe';
+        form.style.display = 'none';
+
+        // Add form fields
+        Object.keys(formData).forEach(key => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = formData[key];
+            form.appendChild(input);
         });
 
-        const result = await response.json();
-        console.log('Response from server:', result);
-
-        if (result.status === 'success') {
-            // Show success message
-            contactForm.style.display = 'none';
-            successMessage.textContent = `Thank you, ${firstName}! You will be contacted shortly!`;
-            successMessage.classList.add('show');
-
-            // Close drawer after 3 seconds
-            setTimeout(() => {
-                successMessage.classList.remove('show');
-                contactForm.style.display = 'none';
-                contactDrawer.classList.remove('active');
-
-                setTimeout(() => {
-                    contactForm.reset();
-                    contactForm.style.display = 'block';
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 400);
-            }, 3000);
-        } else {
-            throw new Error(result.message || 'Submission failed');
+        // Create hidden iframe to catch the response
+        let iframe = document.getElementById('hidden_iframe');
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.name = 'hidden_iframe';
+            iframe.id = 'hidden_iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
         }
+
+        // Submit the form
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+        console.log('Form submitted successfully');
+
+        // Show success message (we can't verify the response due to CORS)
+        contactForm.style.display = 'none';
+        successMessage.textContent = `Thank you, ${firstName}! You will be contacted shortly!`;
+        successMessage.classList.add('show');
+
+        // Close drawer after 3 seconds
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+            contactForm.style.display = 'none';
+            contactDrawer.classList.remove('active');
+
+            setTimeout(() => {
+                contactForm.reset();
+                contactForm.style.display = 'block';
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 400);
+        }, 3000);
 
     } catch (error) {
         console.error('Error:', error);
