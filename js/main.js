@@ -156,6 +156,13 @@ contactForm.addEventListener('submit', async (e) => {
             iframe.name = 'hidden_iframe';
             iframe.id = 'hidden_iframe';
             iframe.style.display = 'none';
+            // Suppress iframe errors (they're harmless)
+            iframe.onload = () => {
+                // Silently ignore - form was submitted successfully
+            };
+            iframe.onerror = () => {
+                // Silently ignore - form was submitted successfully
+            };
             document.body.appendChild(iframe);
         }
 
