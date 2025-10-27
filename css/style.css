@@ -98,8 +98,8 @@
         }
 
         .card-left {
-            flex: 1;
-            padding: 40px 30px;
+            flex: 0 1 400px;; /* was 1 */
+            padding: 40px 60px; /*was 40px 30px; */
             display: flex;
             flex-direction: column;
             justify-content: center;
