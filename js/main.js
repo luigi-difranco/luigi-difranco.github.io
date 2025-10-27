@@ -117,7 +117,7 @@ contactForm.addEventListener('submit', async (e) => {
         await waitForRecaptcha();
 
         // Get reCAPTCHA token
-        const token = await grecaptcha.execute('YOUR_SITE_KEY_HERE', { action: 'submit' });
+        const token = await grecaptcha.execute('6LdURfgrAAAAAFU-ExQBeSHNelAQb2kSmoRydlA7', { action: 'submit' });
 
         console.log('reCAPTCHA token obtained');
         submitBtn.textContent = 'Sending...';
