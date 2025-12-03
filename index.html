@@ -8,8 +8,75 @@ Created while Vibe Coding with Claude.ai
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Business Card</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Add reCAPTCHA script -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LdURfgrAAAAAFU-ExQBeSHNelAQb2kSmoRydlA7"></script>
+    <style>
+        /* Survey Button Styles */
+        .survey-float-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #6b8e23 0%, #556b2f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(107, 142, 35, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .survey-float-btn:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 6px 20px rgba(107, 142, 35, 0.6);
+        }
+
+        .survey-float-btn .survey-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+        }
+
+        .survey-float-btn .survey-text {
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .survey-float-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+            margin-bottom: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .survey-float-btn {
+                width: 60px;
+                height: 60px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .survey-float-btn .survey-text {
+                font-size: 9px;
+            }
+
+            .survey-float-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="card-container">
@@ -96,6 +163,16 @@ Created while Vibe Coding with Claude.ai
             </div>
         </div>
     </div>
+
+    <!-- Floating AI Survey Button -->
+    <a href="ai-survey.html" class="survey-float-btn" aria-label="Share your views on AI">
+        <div class="survey-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <span class="survey-text">Share your views on AI</span>
+        </div>
+    </a>
 
     <script src="js/main.js"></script>
 </body>
